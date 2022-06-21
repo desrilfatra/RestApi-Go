@@ -135,17 +135,17 @@ func (h *ItemHandler) DeleteOrderHandler(w http.ResponseWriter, r *http.Request,
 
 }
 
-func (h *ItemHandler) UpdateOrderId(w http.ResponseWriter, r *http.Request, id string) {
-	if id != "" { // get by id
+func (h *ItemHandler) UpdateOrderId(w http.ResponseWriter, r *http.Request, item_id string) {
+	if item_id != "" {
 		var newOrder entity.Order
 		json.NewDecoder(r.Body).Decode(&newOrder)
-		sqlstatment := `
-		update orders set customer_name = $1 , ordered_at = $2 where order_id = $3;`
+		fmt.Println("tesst", newOrder)
+		sqlstatment := `update orders set customer_name = $1 , ordered_at = $2 where order_id = $3`
 
 		res, err := h.db.Exec(sqlstatment,
 			newOrder.Customer_name,
 			time.Now(),
-			id,
+			item_id,
 		)
 		if err != nil {
 			panic(err)
@@ -158,7 +158,7 @@ func (h *ItemHandler) UpdateOrderId(w http.ResponseWriter, r *http.Request, id s
 			items.Quantity = newOrder.Item[i].Quantity
 			query := `update items set item_code = $1, description = $2, quantity = $3 where order_id = $4 and item_id = $5`
 
-			_, err := h.db.Exec(query, items.Item_code, items.Description, items.Quantity, id, items.Item_id)
+			_, err := h.db.Exec(query, items.Item_code, items.Description, items.Quantity, item_id, items.Item_id)
 			if err != nil {
 				panic(nil)
 			}
@@ -168,7 +168,7 @@ func (h *ItemHandler) UpdateOrderId(w http.ResponseWriter, r *http.Request, id s
 			panic(err)
 		}
 
-		w.Write([]byte(fmt.Sprint("User  update ", count)))
+		w.Write([]byte(fmt.Sprint("User update ", count)))
 		return
 	}
 }
