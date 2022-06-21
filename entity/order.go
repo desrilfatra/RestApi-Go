@@ -4,14 +4,14 @@ import "time"
 
 type Order struct {
 	Order_id      int       `json:"order_id"`
-	Customer_name string    `json:"customer_name"`
-	Ordered_at    time.Time `json:"ordered_at"`
-	Item          []Item    `json:"item"`
+	Customer_name string    `json:"customerName"`
+	Ordered_at    time.Time `json:"orderedAt"`
+	Item          []Item    `json:"items"`
 }
 
 type Item struct {
-	Item_id     int    `json:"item_id"`
-	Item_code   string `json:"item_code"`
+	Item_id     int    `json:"lineItemId"`
+	Item_code   string `json:"itemCode"`
 	Description string `json:"description"`
 	Quantity    int    `json:"quantity"`
 	Order_id    int    `json:"order_id"`
