@@ -52,8 +52,8 @@ func (h *ItemHandler) getItemHandler(w http.ResponseWriter, r *http.Request, ite
 		,o.customer_name
 		,o.ordered_at
 		,json_agg(json_build_object(
-			'item_id',i.item_id
-			,'item_code',i.item_code
+			'lineItemId',i.item_id
+			,'itemCode',i.item_code
 			,'description',i.description
 			,'quantity',i.quantity
 			,'order_id',i.order_id
